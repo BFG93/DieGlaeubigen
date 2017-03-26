@@ -111,22 +111,11 @@ public class Polynomial {
                     lita.remove();
                 }
             } else if (ta.getExp() > tb.getExp()) {
-                while (ta.getExp() > tb.getExp()) {
-                    if (lita.hasNext()){
-                    ta = lita.next();
-                    if (ta.getExp() == tb.getExp()) {
-                        ta.minus(tb);
-                        if (ta.getCoef() == 0) {
-                            lita.remove();
-                        }
-                    }
-                    }
-                    else {
-                        terms.add(tb);
-                    }
-                }
+                tb = litb.previous();
+                //System.out.println("litb: " + litb.previous());
+
             } else { //ta.getExp < tb.getExp
-                terms.add(0, tb);
+                System.out.println("lita: " + lita.previous());
             }
 
         }
