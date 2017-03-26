@@ -1,5 +1,6 @@
 package polynomial;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
@@ -8,7 +9,8 @@ import java.util.Scanner;
 /**
  * A skeleton class for representing Polynomials
  *
- * @author Sjaak Smetsers
+ * @author Clemens Beißel 4547330
+ * @author Christian Lammers 4578236
  * @date 19-04-2016
  */
 public class Polynomial {
@@ -74,6 +76,14 @@ public class Polynomial {
         }
         return s;
     }
+    
+    public Double apply(Double x){
+        Double result = 0.0;
+        for (Term t: terms){
+            result += t.getCoef()*x;
+        }
+        return result;
+    }
 
     public void plus(Polynomial b) {
         ListIterator<Term> lita = terms.listIterator(),
@@ -86,18 +96,28 @@ public class Polynomial {
                     lita.remove();
                 }
             } else if (ta.getExp() > tb.getExp()) {
-                while (ta.getExp() > tb.getExp()) {
-                    ta = lita.next();
-                }
-                if (ta.getExp() == tb.getExp()) {
-                    ta.plus(tb);
-                    if (ta.getCoef() == 0) {
-                        lita.remove();
+                tb = litb.previous();
+                if (!lita.hasNext())
+                    while(litb.hasNext()){
+                        tb = litb.next();
+                        lita.add(new Term(tb.getCoef(), tb.getExp()));
                     }
-                }
+                //System.out.println("litb: " + litb.previous());
 
+            } else {//ta.getExp < tb.getExp
+                ta = lita.previous();
+                lita.add(tb);
+                //System.out.println("lita: " + lita.previous());
             }
+
         }
+        //clean up
+//        lita = terms.listIterator();
+//        while (lita.hasNext()) {
+//            if (lita.next().getCoef() == 0) {
+//                lita.remove();
+//            }
+//        }
     }
 
     public void minus(Polynomial b) {
@@ -112,16 +132,47 @@ public class Polynomial {
                 }
             } else if (ta.getExp() > tb.getExp()) {
                 tb = litb.previous();
+                if (!lita.hasNext())
+                    while(litb.hasNext()){
+                        tb = litb.next();
+                        lita.add(new Term(-tb.getCoef(), tb.getExp()));
+                    }
                 //System.out.println("litb: " + litb.previous());
 
             } else { //ta.getExp < tb.getExp
-                System.out.println("lita: " + lita.previous());
+                ta = lita.previous();
+                lita.add(new Term(-tb.getCoef(), tb.getExp()));
+                //System.out.println("lita: " + lita.previous());
             }
 
         }
     }
 
     public void times(Polynomial b) {
+        ListIterator<Term> lita = terms.listIterator(),
+                litb = b.terms.listIterator();
+        Polynomial copy = new Polynomial("0 0");
+//        for (Term t : terms) {
+//            copy.terms.add(new Term(0, 0));
+//        }
+        while (lita.hasNext()) {
+            Term ta = lita.next();
+            Term temp = new Term(ta.getCoef(), ta.getExp());
+            Polynomial step = new Polynomial();
+            for (int i = 0; i < b.terms.size(); i++) {
+                ta.times(b.terms.get(i));
+                step.terms.add(ta);
+                ta = new Term(temp.getCoef(), temp.getExp());
+            }
+            copy.plus(step);
+        }
+
+        //deepCopy
+        terms = new LinkedList<>();
+        for (Term t : copy.terms) {
+            terms.add(t);
+        }
+
     }
 
     public void divide(Polynomial b) {
