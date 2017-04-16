@@ -11,14 +11,17 @@ package opgave9;
  * @author Clemens Beissel 4547330
  */
 public abstract class IJsje {
+    
+    protected String beschrijving;
 
     
 
     public IJsje() {
+        beschrijving = "onbekend ijsje";
     }
 
     public String geefBeschrijving() {
-        return "onbekend ijsje";
+        return beschrijving;
 
     }
     

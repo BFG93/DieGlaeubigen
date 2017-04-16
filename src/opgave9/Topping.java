@@ -10,15 +10,19 @@ package opgave9;
  * @author Clemens Beissel 4547330
  */
 public abstract class Topping extends IJsje {
+
     protected final IJsje ijsje;
-    
-    public Topping(IJsje ijsje){
+
+    public Topping(IJsje ijsje) {
         this.ijsje = ijsje;
     }
-    
-    
+
     public int prijs() {
         return ijsje.prijs();
-    } 
+    }
 
+    public String geefBeschrijving() {
+        return ijsje.geefBeschrijving();
+
+    }
 }

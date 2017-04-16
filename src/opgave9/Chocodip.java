@@ -20,5 +20,9 @@ public class Chocodip extends Topping {
         return super.prijs() + 30;
     }
     
+    @Override
+     public String geefBeschrijving() {
+        return super.geefBeschrijving() + " en chocodip";
+     }
     
 }

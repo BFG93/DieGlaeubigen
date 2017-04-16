@@ -24,8 +24,9 @@ public class Opgave9 {
 
     private static void run() {
         List<IJsje> ijsjes = new LinkedList<>();
-        ijsjes.add(new Slagroom(new VanilleIJs()));
+        ijsjes.add(new VanilleIJs());
         ijsjes.add(new Slagroom(new YoghurtIJs()));
+        ijsjes.add(new Spikkels( new Slagroom(new VanilleIJs())));
  
         
         for ( IJsje i: ijsjes){

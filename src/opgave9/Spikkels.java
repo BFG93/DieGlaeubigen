@@ -14,5 +14,10 @@ public class Spikkels extends Topping {
     public Spikkels(IJsje ijsje) {
         super(ijsje);
     }
+    
+    @Override
+     public String geefBeschrijving() {
+        return super.geefBeschrijving() + " en spikkels";
+     }
 
 }

@@ -19,4 +19,9 @@ public class Slagroom extends Topping {
         return super.prijs() + 50;
     }
     
+    @Override
+     public String geefBeschrijving() {
+        return super.geefBeschrijving() + " en slagroom";
+     }
+    
 }
